@@ -11,5 +11,6 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('signup/', RegisterView.as_view(), name='signup'),
     path('confirm/<str:token>', activate_user, name='confirm'),
+    #TODO: написать метод сброса пароля
     # path('resetpassword/', reset_password, name='reset_password'),
 ]

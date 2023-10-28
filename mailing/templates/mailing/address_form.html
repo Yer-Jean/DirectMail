@@ -1,0 +1,32 @@
+{% extends 'mailing/base.html' %}
+{% block content %}
+
+<form method="post" class="row" enctype="multipart/form-data">
+    <div class="col-8">
+        <div class="card">
+            <div class="card-header">
+                {% if object %}
+                Edit address
+                {% else %}
+                Add address
+                {% endif %}
+            </div>
+            <div class="card-body">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-secondary">
+                        {% if object %}
+                        Save
+                        {% else %}
+                        Add
+                        {% endif %}
+                    </button>
+                    <a class="btn btn-outline-secondary" href="{% url 'mailing:addresses' %}">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
