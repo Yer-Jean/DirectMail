@@ -30,3 +30,21 @@ class Address(models.Model):
         verbose_name = 'address'
         verbose_name_plural = 'addresses'
         ordering = ('email_address', 'last_name',)
+
+
+class Message(models.Model):
+    description = models.CharField(max_length=150, **NULLABLE, verbose_name='Description')
+    subject = models.CharField(max_length=150, **NULLABLE, verbose_name='Subject')
+    text_message = models.TextField(**NULLABLE, verbose_name='Message')
+    created_date = models.DateTimeField(auto_now_add=True, verbose_name='Created date')
+    modified_date = models.DateTimeField(auto_now=True, verbose_name='Modified date')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
+                                   **NULLABLE, verbose_name='Created by')
+
+    def __str__(self):
+        return f'{self.subject}'
+
+    class Meta:
+        verbose_name = 'message'
+        verbose_name_plural = 'messages'
+        ordering = ('created_date',)

@@ -3,9 +3,9 @@
 {% block content %}
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h3>Addresses</h3>
+    <h3>Messages</h3>
     <div class="btn-toolbar mb-2 mb-md-0">
-        <a type="button" class="btn btn-sm btn-secondary" href="{% url 'mailing:address_create' %}">Add
+        <a type="button" class="btn btn-sm btn-secondary" href="{% url 'mailing:message_create' %}">Add
             new</a>
     </div>
 </div>
@@ -14,12 +14,9 @@
     <table class="table table-striped table-hover">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>E-mail (is correct)</th>
-            <th>Phone</th>
-            <th>Birthday</th>
-            <th>Gender</th>
+            <th>Description</th>
+            <th>Subject</th>
+            <th>Message</th>
             <th></th>
         </tr>
         </thead>
@@ -28,46 +25,21 @@
 
         {% for object in object_list %}
         <tr>
-
-            <td>{{ object.first_name }}</td>
-            <td>{{ object.last_name }}</td>
-            <td>{{ object.email_address }}
-                {% if object.is_correct %}
-                    <span class="badge rounded-pill text-bg-secondary">✓</span>
-                {% else %}
-                    <span class="badge rounded-pill text-bg-secondary">✕</span>
-                {% endif %}
-            </td>
-
-            {% if object.phone_number %}
-                <td>{{ object.phone_number }}</td>
-            {% else %}
-                <td></td>
-            {% endif %}
-
-            {% if object.birthday %}
-                <td>{{ object.birthday|date:"d.m.Y" }}</td>
-            {% else %}
-                <td></td>
-            {% endif %}
-
-            {% if object.gender == "u" %}
-                <td></td>
-            {% else %}
-                <td>{{ object.get_gender_display|title }}</td>
-            {% endif %}
+            <td>{{ object.description|truncatechars:20  }}</td>
+            <td>{{ object.subject|truncatechars:25  }}</td>
+            <td>{{ object.text_message|truncatechars:40 }}</td>
 
             <td>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a type="button" class="btn" href="{% url 'mailing:address_view' object.pk %}"
+                    <a type="button" class="btn" href="{% url 'mailing:message_view' object.pk %}"
                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
                         View
                     </a>
-                    <a type="button" class="btn" href="{% url 'mailing:address_update' object.pk %}"
+                    <a type="button" class="btn" href="{% url 'mailing:message_update' object.pk %}"
                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
                         Edit
                     </a>
-                    <a type="button" class="btn" href="{% url 'mailing:address_delete' object.pk %}"
+                    <a type="button" class="btn" href="{% url 'mailing:message_delete' object.pk %}"
                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
                         Delete
                     </a>
