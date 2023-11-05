@@ -25,11 +25,11 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                     <a class="btn btn-outline-secondary btn-sm" href="{% url 'mailing:messages' %}">All messages</a>
-                    <a class="btn btn-outline-secondary btn-sm" href="{% url 'mailing:address_update' object.pk %}">Edit</a>
-                    <a class="btn btn-outline-danger btn-sm" href="{% url 'mailing:address_delete' object.pk %}">Delete</a>
+                    <a class="btn btn-outline-secondary btn-sm" href="{% url 'mailing:message_update' object.pk %}">Edit</a>
+                    <a class="btn btn-outline-danger btn-sm" href="{% url 'mailing:message_delete' object.pk %}">Delete</a>
                 </div>
-                <small>Created at: <strong>{{ object.created_date|date:"d.m.Y H:i:s" }}</strong>, Modified at:
-                    <strong>{{ object.modified_date|date:"d.m.Y H:i:s" }}</strong></small>
+                <small>Created at: <strong>{{ object.created_date|date:"d M Y H:i:s" }}</strong>, Modified at:
+                    <strong>{{ object.modified_date|date:"d M Y H:i:s" }}</strong></small>
             </div>
         </div>
     </div>

@@ -6,15 +6,14 @@
         <div class="card">
             <div class="card-header">
                 {% if object %}
-                Edit address
+                Edit schedule
                 {% else %}
-                Add address
+                Add schedule
                 {% endif %}
             </div>
             <div class="card-body">
                 {% csrf_token %}
                 {{ form.as_p }}
-<!--                <input type="date" id="date" value="{{ form.birthday|date}} ">-->
                 <div class="btn-group">
                     <button type="submit" class="btn btn-secondary">
                         {% if object %}
@@ -23,7 +22,7 @@
                         Add
                         {% endif %}
                     </button>
-                    <a class="btn btn-outline-secondary" href="{% url 'mailing:addresses' %}">Cancel</a>
+                    <a class="btn btn-outline-secondary" href="{% url 'mailing:schedules' %}">Cancel</a>
                 </div>
             </div>
         </div>
