@@ -4,14 +4,14 @@
         <div class="col-6">
             <div class="card">
                 <div class="card-header">
-                    Delete message
+                    Delete schedule
                 </div>
                 <div class="card-body">
                     {% csrf_token %}
-                    <p>Are you sure you want to delete the message with subject:<br>
-                        "{{ object.subject }}"?</p>
+                    <p>Are you sure you want to delete the schedule<br>
+                        "{{ object.description }}"?</p>
                     <button type="submit" class="btn btn-danger">Delete</button>
-                    <a class="btn btn-outline-secondary" href="{% url 'mailing:messages' %}">Cancel</a>
+                    <a class="btn btn-outline-secondary" href="{% url 'mailing:schedules' %}">Cancel</a>
                 </div>
 
             </div>

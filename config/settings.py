@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_crontab',
+
     'mailing.apps.MailingConfig',
     'users.apps.UsersConfig',
 ]
@@ -147,3 +149,8 @@ EMAIL_PORT = os.getenv('EMAIL_PORT')
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL') == '1'
+
+CRONJOBS = [
+    ('*/1 * * * *', 'mailing.cron_jobs.send_scheduled_emails', '>> cron.log'),
+]
+# BASE_DIR / '.env'

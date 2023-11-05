@@ -1,0 +1,102 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+<!--<div class="col-8">-->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title"><strong><p><h4>{{ object.description }}</p></h4></strong></div>
+        </div>
+
+        <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Status</dt>
+                    <dd class="col-sm-9">{{ object.get_status_display }}</dd>
+
+                    <dt class="col-sm-3">Start date - End date</dt>
+                    <dd class="col-sm-9">{{ object.start_date }} - {{ object.end_date }}</dd>
+
+                    <dt class="col-sm-3">Periodic</dt>
+                    <dd class="col-sm-9">
+                        {% if object.periodic == "s" %}
+                            Once on {{ object.start_date|date:"d M Y" }} at {{ object.time|time:"H:i" }}
+                        {% elif object.periodic == "d" %}
+                            Daily at {{ object.time|time:"H:i" }}
+                        {% elif object.periodic == "w" %}
+                            Weekly every {{ object.day_of_week }}
+                        {% elif object.periodic == "m" %}
+                            Monthly every {{ object.day_of_month }} day
+                        {% endif %}
+                    </dd>
+
+                    <dt class="col-sm-3">Message subject</dt>
+                    <dd class="col-sm-9">{{ object.message.subject }}</dd>
+
+                    <dt class="col-sm-3">Message</dt>
+                    <dd class="col-sm-9">{{ object.message.text_message|linebreaksbr }}</dd>
+
+                    {# <dt class="col-sm-3">Gender</dt> #}
+                    {# <dd class="col-sm-9">{{ object.get_gender_display|title }}</dd> #}
+                    {# <dd class="col-sm-9">{{ object.gender|title }}</dd> #}
+                </dl>
+        </div>
+
+        <div class="card-footer">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a class="btn btn-outline-secondary btn-sm" href="{% url 'mailing:schedules' %}">All
+                        schedules</a>
+                    <a class="btn btn-outline-secondary btn-sm"
+                       href="{% url 'mailing:schedule_update' object.pk %}">Edit</a>
+                    <a class="btn btn-outline-danger btn-sm"
+                       href="{% url 'mailing:schedule_delete' object.pk %}">Delete</a>
+                </div>
+                <small>Created at: <strong>{{ object.created_date|date:"d M Y H:i:s" }}</strong>, Modified at:
+                    <strong>{{ object.modified_date|date:"d M Y H:i:s" }}</strong></small>
+            </div>
+        </div>
+    </div>
+
+<br>
+
+<div class="card">
+    <div class="card-header">
+        <strong class="text-body-secondary">Addresses</strong>
+    </div>
+    <div class="card-body">
+            <dl class="row">
+                {% for address in address_item %}
+
+                    <dt class="col-sm-3">{{ address.email_address }}</dt>
+                    <dd class="col-sm-9">{{ address.first_name }} {{ address.last_name }}</dd>
+<!--                    <br>-->
+
+                {% endfor %}
+            </dl>
+            {% if user.is_authenticated %}
+            <div class="btn-group py-3">
+                {# <a class="btn btn-sm btn-outline-secondary" href="{% url 'catalog:version_list' object.pk %}">Manage versions</a> #}
+            </div>
+            {% endif %}
+    </div>
+</div>
+
+
+
+<!--<div class="col-6">-->
+<!--    <div class="h-100 p-5 bg-body-tertiary border rounded-3">-->
+<!--        <div class="container-fluid py-5">-->
+<!--            <h3 class="display-6">{{ object.first_name }} {{ object.last_name }}</h3>-->
+<!--            <p class="col-md-10 fs-4">{{ object.email_address }}</p>-->
+<!--            <div class="card-footer">-->
+<!--                <div class="d-flex justify-content-between align-items-center">-->
+<!--                    <div class="btn-group">-->
+<!--                {#        <a class="btn btn-outline-secondary" href="{% url 'mailing:addresses' %}">Back</a> #} -->
+<!--               {#         <a class="btn btn-outline-secondary" href="{% url 'mailing:address_delete' object.pk %}">Edit</a> #}-->
+<!--                 {#       <a class="btn btn-outline-danger" href="{% url 'mailing:address_delete' object.pk %}">Delete</a> #}-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+{% endblock %}
