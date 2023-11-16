@@ -22,7 +22,7 @@
                         {% elif object.periodic == "d" %}
                             Daily at {{ object.time|time:"H:i" }}
                         {% elif object.periodic == "w" %}
-                            Weekly every {{ object.day_of_week }}
+                            Weekly every {{ object.get_day_of_week_display }}
                         {% elif object.periodic == "m" %}
                             Monthly every {{ object.day_of_month }} day
                         {% endif %}

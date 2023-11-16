@@ -42,7 +42,7 @@ class Message(models.Model):
                                    **NULLABLE, verbose_name='Created by')
 
     def __str__(self):
-        return f'{self.subject}'
+        return f'{self.description}/{self.subject}'
 
     class Meta:
         verbose_name = 'message'
@@ -60,19 +60,19 @@ class Schedule(models.Model):
 
     STATUS_CHOICES = (
         ('c', 'Created'),
-        ('r', 'Started'),
+        ('r', 'Running'),
         ('p', 'Paused'),
-        ('e', 'Ended'),
+        ('f', 'Completed'),
     )
 
     DAY_OF_WEEK_CHOICES = (
-        ('mon', 'Monday'),
-        ('tue', 'Tuesday'),
-        ('wed', 'Wednesday'),
-        ('thu', 'Thursday'),
-        ('fri', 'Friday'),
-        ('sat', 'Saturday'),
-        ('sun', 'Sunday'),
+        (1, 'Monday'),
+        (2, 'Tuesday'),
+        (3, 'Wednesday'),
+        (4, 'Thursday'),
+        (5, 'Friday'),
+        (6, 'Saturday'),
+        (7, 'Sunday'),
     )
 
     description = models.CharField(max_length=200, verbose_name='Description')
@@ -80,7 +80,7 @@ class Schedule(models.Model):
     end_date = models.DateField(verbose_name='End day')
     periodic = models.CharField(max_length=1, choices=PERIODIC_CHOICES, verbose_name='Periodic')
     time = models.TimeField(verbose_name='Time to send')
-    day_of_week = models.CharField(max_length=3, choices=DAY_OF_WEEK_CHOICES,
+    day_of_week = models.IntegerField(choices=DAY_OF_WEEK_CHOICES,
                                    verbose_name='Day of the week to send', **NULLABLE)
     day_of_month = models.IntegerField(verbose_name='Day of the month to send', **NULLABLE)
     message = models.ForeignKey(Message, on_delete=models.CASCADE, verbose_name='Message')
@@ -97,3 +97,18 @@ class Schedule(models.Model):
     class Meta:
         verbose_name = 'Schedule'
         verbose_name_plural = 'Schedules'
+        ordering = ('-start_date',)
+
+
+class MailingLog(models.Model):
+    date_of_last_attempt = models.DateTimeField(auto_now=True, verbose_name='Date and time of last attempt')
+    status_of_last_attempt = models.BooleanField(default=False, verbose_name='Status of last attempt')
+    server_response = models.TextField(verbose_name='Server response', **NULLABLE)
+    message = models.ForeignKey(Message, on_delete=models.CASCADE, verbose_name='Message', **NULLABLE)
+
+    def __str__(self):
+        return f'{self.message.subject}: {self.date_of_last_attempt} - {self.status_of_last_attempt}'
+
+    class Meta:
+        verbose_name = 'Mailing log'
+        ordering = ('-date_of_last_attempt',)

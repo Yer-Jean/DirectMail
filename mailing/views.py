@@ -1,11 +1,30 @@
+from django.db.models import Q
+from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
+from django.views import generic
 from django.views.generic import TemplateView, ListView, CreateView, DetailView, UpdateView, DeleteView
 
 from mailing.models import Address, Message, Schedule
+from users.models import User
 
 
-class IndexView(TemplateView):
-    template_name = 'mailing/index.html'
+class IndexView(generic.View):
+# class IndexView(TemplateView):
+    # template_name = 'mailing/index.html'
+
+    def get(self, request):
+        count_users = User.objects.all().count()
+        count_schedules = Schedule.objects.all().count()
+        count_active_schedules = Schedule.objects.filter(Q(status='c') | Q(status='r')).count()
+        count_unique_addresses = Address.objects.all().distinct('email_address').count()
+        print(count_unique_addresses)
+        context = {
+            'count_users': count_users,
+            'count_schedules': count_schedules,
+            'count_active_schedules': count_active_schedules,
+            'count_unique_addresses': count_unique_addresses,
+        }
+        return render(request, 'mailing/index.html', context)
 
 
 class AddressListView(ListView):
@@ -109,7 +128,7 @@ class ScheduleDetailView(DetailView):
         context_data = super().get_context_data(**kwargs)
 
         schedule_item = Schedule.objects.get(pk=self.kwargs.get('pk'))
-        address_item = Address.objects.filter(schedule =self.kwargs.get('pk'))
+        address_item = Address.objects.filter(schedule=self.kwargs.get('pk'))
         # Можно вернуть только последнюю версию
         # if version_item:
         #     version_item = version_item.last()
