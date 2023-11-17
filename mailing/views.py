@@ -4,7 +4,7 @@ from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.views.generic import TemplateView, ListView, CreateView, DetailView, UpdateView, DeleteView
 
-from mailing.models import Address, Message, Schedule
+from mailing.models import Address, Message, Schedule, MailingLog
 from users.models import User
 
 
@@ -17,7 +17,6 @@ class IndexView(generic.View):
         count_schedules = Schedule.objects.all().count()
         count_active_schedules = Schedule.objects.filter(Q(status='c') | Q(status='r')).count()
         count_unique_addresses = Address.objects.all().distinct('email_address').count()
-        print(count_unique_addresses)
         context = {
             'count_users': count_users,
             'count_schedules': count_schedules,
@@ -151,3 +150,11 @@ class ScheduleUpdateView(UpdateView):
 class ScheduleDeleteView(DeleteView):
     model = Schedule
     success_url = reverse_lazy('mailing:schedules')
+
+
+class MailingLogListView(ListView):
+    model = MailingLog
+
+
+class MailingLogDetailView(DetailView):
+    model = MailingLog
