@@ -18,7 +18,7 @@ def send_mail_now(mail) -> bool:
         sending_result = send_mail(
             subject=mail.message.subject,
             message=mail.message.text_message,
-            # from_email='xxx@yandexx.com',
+            # from_email='my_mail@yandexx.com',
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=recipients_list,
             fail_silently=False,
@@ -27,7 +27,7 @@ def send_mail_now(mail) -> bool:
         MailingLog.objects.create(
             status_of_last_attempt=False,
             server_response=err,
-            message=mail.message,
+            schedule=mail,
         )
         print(mail.message.subject)
         return False
@@ -35,9 +35,9 @@ def send_mail_now(mail) -> bool:
         MailingLog.objects.create(
             status_of_last_attempt=True,
             server_response='Message sent successfully',
-            message=mail.message,
+            schedule=mail,
         )
-        print(mail.message.subject)
+        # print(mail.message.subject)
         return True
 
 

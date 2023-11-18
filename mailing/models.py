@@ -104,10 +104,10 @@ class MailingLog(models.Model):
     date_of_last_attempt = models.DateTimeField(auto_now=True, verbose_name='Date and time of last attempt')
     status_of_last_attempt = models.BooleanField(default=False, verbose_name='Status of last attempt')
     server_response = models.TextField(verbose_name='Server response', **NULLABLE)
-    message = models.ForeignKey(Message, on_delete=models.CASCADE, verbose_name='Message', **NULLABLE)
+    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE, verbose_name='Schedule', **NULLABLE)
 
     def __str__(self):
-        return f'{self.message.subject}: {self.date_of_last_attempt} - {self.status_of_last_attempt}'
+        return f'{self.schedule.description}: {self.date_of_last_attempt} - {self.status_of_last_attempt}'
 
     class Meta:
         verbose_name = 'Mailing log'

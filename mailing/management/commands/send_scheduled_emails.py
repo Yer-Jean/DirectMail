@@ -16,7 +16,7 @@ class Command(BaseCommand):
         Schedule.objects.filter(~Q(status='f') & Q(end_date__lt=now)).update(status='f')
 
         # Устанавливаем статус Running(r) у рассылок, если наступила дата для их запуска
-        Schedule.objects.filter(Q(status='c') & Q(start_date=now)).update(status='r')
+        Schedule.objects.filter(Q(status='c') & Q(start_date__lte=now)).update(status='r')
 
         # Выбираем все рассылки со статусом Running
         mailing = Schedule.objects.filter(status='r')

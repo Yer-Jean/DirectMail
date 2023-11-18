@@ -44,7 +44,18 @@
             {% endif %}
 
             <td>{{ object.message.subject|truncatechars:30 }}</td>
-            <td>{{ object.get_status_display }}</td>
+            <td>
+                {% if object.status == "c" %}
+                    <span class="badge rounded-pill text-bg-primary opacity-75">
+                {% elif object.status == "r" %}
+                    <span class="badge rounded-pill text-bg-success opacity-75">
+                {% elif object.status == "p" %}
+                    <span class="badge rounded-pill text-bg-warning opacity-75">
+                {% elif object.status == "f" %}
+                    <span class="badge rounded-pill text-bg-secondary opacity-75">
+                {% endif %}
+                {{ object.get_status_display }}</span>
+            </td>
 
 {% comment %}
             <td>{{ object.email_address }}

@@ -25,5 +25,5 @@ class ScheduleAdmin(admin.ModelAdmin):
 
 @admin.register(MailingLog)
 class MailingLogAdmin(admin.ModelAdmin):
-    list_display = ('date_of_last_attempt', 'status_of_last_attempt', 'server_response', 'message')
+    list_display = ('date_of_last_attempt', 'status_of_last_attempt', 'server_response', 'schedule')
     list_filter = ('date_of_last_attempt',)

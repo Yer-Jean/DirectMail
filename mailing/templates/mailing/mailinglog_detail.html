@@ -29,12 +29,16 @@
                         <dd class="col-sm-10">{{ object.server_response }}</dd>
                     </dl>
                     <dl class="row">
-                        <dt class="col-sm-2">Message subject</dt>
-                        <dd class="col-sm-10">{{ object.message.subject }}</dd>
+                        <dt class="col-sm-2">Message periodicity</dt>
+                        <dd class="col-sm-10">{{ object.schedule.get_periodic_display }}</dd>
                     </dl>
                     <dl class="row">
                         <dt class="col-sm-2">Message subject</dt>
-                        <dd class="col-sm-10">{{ object.message.text_message|linebreaksbr }}</dd>
+                        <dd class="col-sm-10">{{ object.schedule.message.subject }}</dd>
+                    </dl>
+                    <dl class="row">
+                        <dt class="col-sm-2">Message text</dt>
+                        <dd class="col-sm-10">{{ object.schedule.message.text_message|linebreaksbr }}</dd>
                     </dl>
                 </div>
             </div>
