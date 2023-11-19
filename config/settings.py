@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django_crontab',
 
     'mailing.apps.MailingConfig',
-    # 'blog.apps.BlogConfig',
+    'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
 ]
 
@@ -151,7 +151,7 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL') == '1'
 
-CRONJOBS_PERIOD = '5'  # Количество минут, через которое запускается cron-task
+CRONJOBS_PERIOD = '5'  # Количество минут, через которое запускается cron-job
 CRONJOBS = [
     # ('*/1 * * * *', 'django.core.management.call_command', ['send_scheduled_emails', '>> cron.log']),
     ('*/' + CRONJOBS_PERIOD + ' * * * *', 'django.core.management.call_command', ['send_scheduled_emails']),

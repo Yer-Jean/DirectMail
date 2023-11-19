@@ -1,9 +1,12 @@
+import random
+
 from django.db.models import Q
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.views.generic import TemplateView, ListView, CreateView, DetailView, UpdateView, DeleteView
 
+from blog.models import Article
 from mailing.models import Address, Message, Schedule, MailingLog
 from users.models import User
 
@@ -13,15 +16,27 @@ class IndexView(generic.View):
     # template_name = 'mailing/index.html'
 
     def get(self, request):
+        three_random_articles = []
         count_users = User.objects.all().count()
         count_schedules = Schedule.objects.all().count()
         count_active_schedules = Schedule.objects.filter(Q(status='c') | Q(status='r')).count()
         count_unique_addresses = Address.objects.all().distinct('email_address').count()
+
+        # Выбираем три случайные статьи из блога (без повторов)
+        all_published_articles = Article.objects.filter(is_published=True)
+        num_of_published_articles = all_published_articles.count()
+        while len(three_random_articles) < 3:
+            i = random.randint(0, num_of_published_articles - 1)
+            if all_published_articles[i] not in three_random_articles:
+                three_random_articles.append(all_published_articles[i])
+
+        # Формируем контекст для отображения на домашней странице
         context = {
             'count_users': count_users,
             'count_schedules': count_schedules,
             'count_active_schedules': count_active_schedules,
             'count_unique_addresses': count_unique_addresses,
+            'object_list': three_random_articles,
         }
         return render(request, 'mailing/index.html', context)
 

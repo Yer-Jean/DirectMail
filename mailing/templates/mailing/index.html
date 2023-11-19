@@ -1,5 +1,5 @@
 {% extends 'mailing/base.html' %}
-
+{% load my_tags %}
 {% block content %}
 
 <!--    <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">-->
@@ -10,150 +10,91 @@
 <!--        </div>-->
 <!--    </div>-->
 
-    <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <div class="container px-4 py-0">
-            <h3 class="pb-2 border-bottom">Statistics</h3>
-            <div class="d-flex text-body-secondary pt-3">
-                <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="64" height="32"
-                     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
-                     preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#007bff"/>
-                    <text x="50%" y="50%" fill="#ffffff" dy=".3em">{{ count_users }}</text>
-                </svg>
-                <p class="pb-3 mb-0">
-                    <span class="d-block text-gray-dark"><h5>of our clients have created</h5></span>
-                </p>
+<div class="my-3 p-3 bg-body rounded shadow-sm">
+    <div class="container px-4 py-0">
+        <h3 class="pb-2 border-bottom">Statistics</h3>
+        <div class="d-flex text-body-secondary pt-3">
+            <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="64" height="32"
+                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
+                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#007bff"/>
+                <text x="50%" y="50%" fill="#ffffff" dy=".3em">{{ count_users }}</text>
+            </svg>
+            <p class="pb-3 mb-0">
+                <span class="d-block text-gray-dark"><h5>of our clients have created</h5></span>
+            </p>
+        </div>
+        <div class="d-flex text-body-secondary pt-3">
+            <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="64" height="32"
+                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
+                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#e83e8c"/>
+                <text x="50%" y="50%" fill="#ffffff" dy=".3em">{{ count_schedules }}</text>
+            </svg>
+            <p class="pb-3 mb-0">
+                <span class="d-block text-gray-dark"><h5>mailing lists</h5></span>
+            </p>
+        </div>
+        <div class="d-flex text-body-secondary pt-3">
+            <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="64" height="32"
+                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
+                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#6f42c1"/>
+                <text x="50%" y="50%" fill="#ffffff" dy=".3em">{{ count_active_schedules }}</text>
+            </svg>
+            <p class="pb-3 mb-0">
+                <span class="d-block text-gray-dark"><h5>of which are active and send them to</h5></span>
+            </p>
+        </div>
+        <div class="d-flex text-body-secondary pt-3">
+            <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="64" height="32"
+                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
+                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#6f42c1"/>
+                <text x="50%" y="50%" fill="#ffffff" dy=".3em">{{ count_unique_addresses }}</text>
+            </svg>
+            <p class="pb-3 mb-0">
+                <span class="d-block text-gray-dark"><h5>unique addresses from our database</h5></span>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="my-3 p-3 bg-body rounded shadow-sm">
+    <div class="container px-4 py-0" id="custom-cards">
+        <h3 class="pb-2 border-bottom">Blog - Three random articles</h3>
+
+        <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+
+            {% for object in object_list %}
+            <div class="col">
+                <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+                     style="background-image: url({{ object.image|mediapath }}); background-size: cover; background-repeat: no-repeat; background-position: center;">
+
+                    <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                        <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{ object.title }}</h3>
+                        <ul class="d-flex list-unstyled mt-auto">
+                            <li class="d-flex align-items-center me-3">
+                                <small>{{ object.created_date|date:"d M Y H:i" }}</small>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <a href="{% url 'blog:article_view' object.slug %}" class="stretched-link link-light link-underline-opacity-0"><small>{{ object.views_count }} views</small></a>
+
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
             </div>
-            <div class="d-flex text-body-secondary pt-3">
-                <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="64" height="32"
-                     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
-                     preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#e83e8c"/>
-                    <text x="50%" y="50%" fill="#ffffff" dy=".3em">{{ count_schedules }}</text>
-                </svg>
-                <p class="pb-3 mb-0">
-                    <span class="d-block text-gray-dark"><h5>mailing lists</h5></span>
-                </p>
-            </div>
-            <div class="d-flex text-body-secondary pt-3">
-                <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="64" height="32"
-                     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
-                     preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#6f42c1"/>
-                    <text x="50%" y="50%" fill="#ffffff" dy=".3em">{{ count_active_schedules }}</text>
-                </svg>
-                <p class="pb-3 mb-0">
-                    <span class="d-block text-gray-dark"><h5>of which are active and send them to</h5></span>
-                </p>
-            </div>
-            <div class="d-flex text-body-secondary pt-3">
-                <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="64" height="32"
-                     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
-                     preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#6f42c1"/>
-                    <text x="50%" y="50%" fill="#ffffff" dy=".3em">{{ count_unique_addresses }}</text>
-                </svg>
-                <p class="pb-3 mb-0">
-                    <span class="d-block text-gray-dark"><h5>unique addresses from our database</h5></span>
-                </p>
-            </div>
-<!--            <small class="d-block text-end mt-3">-->
-<!--                <a href="#">All updates</a>-->
-<!--            </small>-->
+
+            {% endfor %}
+
         </div>
     </div>
 
-    <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <div class="container px-4 py-0" id="custom-cards">
-            <h3 class="pb-2 border-bottom">Blog</h3>
-
-            <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
-                <div class="col">
-                    <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
-                         style="background-image: url('unsplash-photo-1.jpg');">
-                        <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-                            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Short title, long jacket</h3>
-                            <ul class="d-flex list-unstyled mt-auto">
-                                <li class="me-auto">
-                                    <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32"
-                                         class="rounded-circle border border-white">
-                                </li>
-                                <li class="d-flex align-items-center me-3">
-                                    <svg class="bi me-2" width="1em" height="1em">
-                                        <use xlink:href="#geo-fill"/>
-                                    </svg>
-                                    <small>Earth</small>
-                                </li>
-                                <li class="d-flex align-items-center">
-                                    <svg class="bi me-2" width="1em" height="1em">
-                                        <use xlink:href="#calendar3"/>
-                                    </svg>
-                                    <small>3d</small>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
-                         style="background-image: url('unsplash-photo-2.jpg');">
-                        <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-                            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Much longer title that wraps to multiple
-                                lines</h3>
-                            <ul class="d-flex list-unstyled mt-auto">
-                                <li class="me-auto">
-                                    <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32"
-                                         class="rounded-circle border border-white">
-                                </li>
-                                <li class="d-flex align-items-center me-3">
-                                    <svg class="bi me-2" width="1em" height="1em">
-                                        <use xlink:href="#geo-fill"/>
-                                    </svg>
-                                    <small>Pakistan</small>
-                                </li>
-                                <li class="d-flex align-items-center">
-                                    <svg class="bi me-2" width="1em" height="1em">
-                                        <use xlink:href="#calendar3"/>
-                                    </svg>
-                                    <small>4d</small>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
-                         style="background-image: url('unsplash-photo-3.jpg');">
-                        <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
-                            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Another longer title belongs here</h3>
-                            <ul class="d-flex list-unstyled mt-auto">
-                                <li class="me-auto">
-                                    <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32"
-                                         class="rounded-circle border border-white">
-                                </li>
-                                <li class="d-flex align-items-center me-3">
-                                    <svg class="bi me-2" width="1em" height="1em">
-                                        <use xlink:href="#geo-fill"/>
-                                    </svg>
-                                    <small>California</small>
-                                </li>
-                                <li class="d-flex align-items-center">
-                                    <svg class="bi me-2" width="1em" height="1em">
-                                        <use xlink:href="#calendar3"/>
-                                    </svg>
-                                    <small>5d</small>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <small class="d-block text-end mt-3">
-            <a href="#">All articles</a>
-        </small>
-    </div>
+    <small class="d-block text-end mt-3">
+        <a class="link-secondary" href="{% url 'blog:articles' %}">View all articles</a>
+    </small>
+</div>
 
 {% endblock %}

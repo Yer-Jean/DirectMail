@@ -1,14 +1,14 @@
-# from django.urls import path
-#
-# from .apps import BlogConfig
-# from .views import ArticleListView
-#
-# app_name = BlogConfig.name
-#
-# urlpatterns = [
-#     path('articles/', ArticleListView.as_view(), name='articles'),
-#     # path('addresses/create/', AddressCreateView.as_view(), name='address_create'),
-#     # path('addresses/view/<int:pk>/', AddressDetailView.as_view(), name='address_view'),
-#     # path('addresses/update/<int:pk>', AddressUpdateView.as_view(), name='address_update'),
-#     # path('addresses/delete/<int:pk>', AddressDeleteView.as_view(), name='address_delete'),
-# ]
+from django.urls import path
+
+from .apps import BlogConfig
+from .views import ArticleListView, ArticleCreateView, ArticleDetailView, ArticleUpdateView, ArticleDeleteView
+
+app_name = BlogConfig.name
+
+urlpatterns = [
+    path('articles/', ArticleListView.as_view(), name='articles'),
+    path('article/create/', ArticleCreateView.as_view(), name='article_create'),
+    path('article/view/<str:slug>/', ArticleDetailView.as_view(), name='article_view'),
+    path('article/update/<int:pk>/', ArticleUpdateView.as_view(), name='article_update'),
+    path('article/delete/<int:pk>', ArticleDeleteView.as_view(), name='article_delete'),
+]
