@@ -151,9 +151,19 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL') == '1'
 
-CRONJOBS_PERIOD = '5'  # Количество минут, через которое запускается cron-job
+CRONJOBS_PERIOD = '5'  # Количество минут, через которое повторяется cron-job
 CRONJOBS = [
     # ('*/1 * * * *', 'django.core.management.call_command', ['send_scheduled_emails', '>> cron.log']),
     ('*/' + CRONJOBS_PERIOD + ' * * * *', 'django.core.management.call_command', ['send_scheduled_emails']),
     # ('*/1 * * * *', 'mailing.cron_jobs.send_scheduled_emails', '>> cron.log'),
 ]
+
+CACHE_ENABLE = os.getenv('CACHE_ENABLE') == '1'
+
+if CACHE_ENABLE:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": os.getenv('CACHE_LOCATION'),
+        }
+    }

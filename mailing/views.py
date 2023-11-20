@@ -8,6 +8,7 @@ from django.views.generic import TemplateView, ListView, CreateView, DetailView,
 
 from blog.models import Article
 from mailing.models import Address, Message, Schedule, MailingLog
+from mailing.services import get_cache
 from users.models import User
 
 
@@ -41,7 +42,15 @@ class IndexView(generic.View):
         return render(request, 'mailing/index.html', context)
 
 
-class AddressListView(ListView):
+class GetContextDataFromCacheMixin():
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['object_list'] = get_cache(self.model)
+        return context_data
+
+
+class AddressListView(GetContextDataFromCacheMixin, ListView):
     model = Address
 
 
@@ -56,7 +65,6 @@ class AddressCreateView(CreateView):
         self.object = form.save()
         self.object.created_by = self.request.user
         self.object.save()
-
         return super().form_valid(form)
 
 
@@ -78,7 +86,7 @@ class AddressDeleteView(DeleteView):
     success_url = reverse_lazy('mailing:addresses')
 
 
-class MessageListView(ListView):
+class MessageListView(GetContextDataFromCacheMixin, ListView):
     model = Message
 
 
@@ -93,7 +101,6 @@ class MessageCreateView(CreateView):
         self.object = form.save()
         self.object.created_by = self.request.user
         self.object.save()
-
         return super().form_valid(form)
 
 
@@ -114,7 +121,7 @@ class MessageDeleteView(DeleteView):
     success_url = reverse_lazy('mailing:messages')
 
 
-class ScheduleListView(ListView):
+class ScheduleListView(GetContextDataFromCacheMixin, ListView):
     model = Schedule
 
 
@@ -131,7 +138,6 @@ class ScheduleCreateView(CreateView):
         self.object = form.save()
         self.object.created_by = self.request.user
         self.object.save()
-
         return super().form_valid(form)
 
 
@@ -167,7 +173,7 @@ class ScheduleDeleteView(DeleteView):
     success_url = reverse_lazy('mailing:schedules')
 
 
-class MailingLogListView(ListView):
+class MailingLogListView(GetContextDataFromCacheMixin, ListView):
     model = MailingLog
 
 

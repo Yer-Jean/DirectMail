@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 from math import ceil
 
 from django.conf import settings
+from django.core.cache import cache
 from django.core.mail import send_mail
 
 from config.settings import CRONJOBS_PERIOD
@@ -12,7 +13,6 @@ def send_mail_now(mail) -> bool:
 
     print(datetime.now())
     recipients_list = [recipient.email_address for recipient in mail.addresses.all()]
-    # recipients_list = mail.addresses.values_list('email_address', flat=True)
     print(recipients_list)
     try:
         sending_result = send_mail(
@@ -47,11 +47,25 @@ def rounded_datetime(date_time: datetime):
     параметру CRONJOBS_PERIOD. В большую сторону, начиная от начала часа.
 
     Например: если CRONJOBS_PERIOD=19, а date_time=2023-10-16 15:33:00, то
-    метод вернет значение 2023-10-16 15:38:00. Или, если CRONJOBS_PERIOD=5,
-    а date_time=2023-10-16 15:28:00, то метод вернет значение 2023-10-16 15:30:00.
+    метод вернет значение 2023-10-16 15:38:00,
+    или,
+    если CRONJOBS_PERIOD=5, а date_time=2023-10-16 15:28:00, то
+    метод вернет значение 2023-10-16 15:30:00.
 
     :param date_time: объект DateTime, который надо округлить
     :return: округленный объект DateTime
     """
     hours, minutes = divmod(ceil(date_time.minute / int(CRONJOBS_PERIOD)) * int(CRONJOBS_PERIOD), 60)
     return (date_time + timedelta(hours=hours)).replace(minute=minutes, second=0, microsecond=0)
+
+
+def get_cache(model):
+    if settings.CACHE_ENABLE:
+        key = f'{model.__name__}_list'
+        cache_list = cache.get(key)
+        if cache_list is None:
+            cache_list = model.objects.all()
+            cache.set(key, cache_list)
+    else:
+        cache_list = model.objects.all()
+    return cache_list
