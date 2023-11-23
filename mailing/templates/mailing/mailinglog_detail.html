@@ -1,0 +1,73 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+<!--<div class="card" style="max-height: 600px;">-->
+<div class="card">
+    <div class="row g-0">
+        <div class="card-header">
+            <p><h4 class="card-title"><strong>Mailing Log Detail</strong></h4></p>
+        </div>
+        <div class="col">
+            <div class="card-body">
+                <div class="container-fluid">
+                    <dl class="row">
+                        <dt class="col-sm-2">Date of last attempt</dt>
+                        <dd class="col-sm-10">{{ object.date_of_last_attempt|date:"d M Y H:i:s" }}</dd>
+                    </dl>
+                    <dl class="row">
+                        <dt class="col-sm-2">Status of attempt</dt>
+                        <dd class="col-sm-10">
+                          {% if object.status_of_last_attempt %}
+                            Success
+                          {% else %}
+                            Fail
+                          {% endif %}
+                        </dd>
+                    </dl>
+                    <dl class="row">
+                        <dt class="col-sm-2">Server response</dt>
+                        <dd class="col-sm-10">{{ object.server_response }}</dd>
+                    </dl>
+                    <dl class="row">
+                        <dt class="col-sm-2">Message periodicity</dt>
+                        <dd class="col-sm-10">{{ object.schedule.get_periodic_display }}</dd>
+                    </dl>
+                    <dl class="row">
+                        <dt class="col-sm-2">Message subject</dt>
+                        <dd class="col-sm-10">{{ object.schedule.message.subject }}</dd>
+                    </dl>
+                    <dl class="row">
+                        <dt class="col-sm-2">Message text</dt>
+                        <dd class="col-sm-10">{{ object.schedule.message.text_message|linebreaksbr }}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a class="btn btn-outline-secondary btn-sm" href="{% url 'mailing:mailing_logs' %}">All Mailing Logs</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="col-6">-->
+<!--    <div class="h-100 p-5 bg-body-tertiary border rounded-3">-->
+<!--        <div class="container-fluid py-5">-->
+<!--            <h3 class="display-6">{{ object.first_name }} {{ object.last_name }}</h3>-->
+<!--            <p class="col-md-10 fs-4">{{ object.email_address }}</p>-->
+<!--            <div class="card-footer">-->
+<!--                <div class="d-flex justify-content-between align-items-center">-->
+<!--                    <div class="btn-group">-->
+<!--                {#        <a class="btn btn-outline-secondary" href="{% url 'mailing:addresses' %}">Back</a> #} -->
+<!--               {#         <a class="btn btn-outline-secondary" href="{% url 'mailing:address_delete' object.pk %}">Edit</a> #}-->
+<!--                 {#       <a class="btn btn-outline-danger" href="{% url 'mailing:address_delete' object.pk %}">Delete</a> #}-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+{% endblock %}

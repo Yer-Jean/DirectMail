@@ -12,6 +12,8 @@ python-dotenv = "^1.0.0"
 psycopg2-binary = "^2.9.9"
 pillow = "^10.1.0"
 django-crontab = "^0.7.1"
+pytils = "^0.4.1"
+redis = "^5.0.1"
 
 
 [build-system]

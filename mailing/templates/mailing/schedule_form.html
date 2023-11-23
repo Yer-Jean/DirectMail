@@ -1,7 +1,7 @@
 {% extends 'mailing/base.html' %}
 {% block content %}
 
-<form method="post" class="row" enctype="multipart/form-data">
+<form id=ScheduleForm method="post" class="row" enctype="multipart/form-data">
     <div class="col-8">
         <div class="card">
             <div class="card-header">
@@ -11,18 +11,69 @@
                 Add schedule
                 {% endif %}
             </div>
+
             <div class="card-body">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <div class="btn-group">
-                    <button type="submit" class="btn btn-secondary">
-                        {% if object %}
-                        Save
-                        {% else %}
-                        Add
-                        {% endif %}
-                    </button>
-                    <a class="btn btn-outline-secondary" href="{% url 'mailing:schedules' %}">Cancel</a>
+
+                <div class="form-group">
+                    <label for="id_description">Description</label>
+                    {{ form.description }}
+                </div>
+                <div class="form-group">
+                    <label for="id_periodic">Periodic</label>
+                    {{ form.periodic }}
+                </div>
+                <div class="form-group">
+                    <label for="id_start_date">Start date</label>
+                    {{ form.start_date }}
+                </div>
+
+                <div class="hidden-field" id="endDayField">
+                    <div class="form-group">
+                        <label for="id_end_date">End date</label>
+                        {{ form.end_date }}
+                    </div>
+                </div>
+
+                <div class="hidden-field" id="dayOfWeekField">
+                    <div class="form-group">
+                        <label for="id_day_of_week">Day of week</label>
+                        {{ form.day_of_week }}
+                    </div>
+                </div>
+
+                <div class="hidden-field" id="dayOfMonthField">
+                    <div class="form-group">
+                        <label for="id_day_of_month">Day of month</label>
+                        {{ form.day_of_month }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_time">Time</label>
+                    {{ form.time }}
+                </div>
+                <div class="form-group">
+                    <label for="id_message">Message</label>
+                    {{ form.message }}
+                </div>
+                <div class="form-group">
+                    <label for="id_addresses">Addresses</label>
+                    {{ form.addresses }}
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-secondary">
+                            {% if object %}
+                            Save
+                            {% else %}
+                            Add
+                            {% endif %}
+                        </button>
+                        <a class="btn btn-outline-secondary" onclick="history.back();">Cancel</a>
+                    </div>
                 </div>
             </div>
         </div>

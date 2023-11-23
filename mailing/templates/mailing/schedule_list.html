@@ -38,13 +38,24 @@
             {% elif object.periodic == "d" %}
                 <td>Daily at {{ object.time|time:"H:i" }}</td>
             {% elif object.periodic == "w" %}
-                <td>Weekly every {{ object.day_of_week }}</td>
+                <td>Weekly every {{ object.get_day_of_week_display }}</td>
             {% elif object.periodic == "m" %}
                 <td>Monthly every {{ object.day_of_month }} day</td>
             {% endif %}
 
             <td>{{ object.message.subject|truncatechars:30 }}</td>
-            <td>{{ object.get_status_display }}</td>
+            <td>
+                {% if object.status == "c" %}
+                    <span class="badge rounded-pill text-bg-primary opacity-75">
+                {% elif object.status == "r" %}
+                    <span class="badge rounded-pill text-bg-success opacity-75">
+                {% elif object.status == "p" %}
+                    <span class="badge rounded-pill text-bg-warning opacity-75">
+                {% elif object.status == "f" %}
+                    <span class="badge rounded-pill text-bg-secondary opacity-75">
+                {% endif %}
+                {{ object.get_status_display }}</span>
+            </td>
 
 {% comment %}
             <td>{{ object.email_address }}

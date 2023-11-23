@@ -2,13 +2,14 @@
 {% block content %}
 
 <form method="post" class="row" enctype="multipart/form-data">
+    <div class="col-2"></div>
     <div class="col-8">
         <div class="card">
             <div class="card-header">
                 {% if object %}
-                Edit address
+                Edit article
                 {% else %}
-                Add address
+                Add article
                 {% endif %}
             </div>
             <div class="card-body">
@@ -25,7 +26,7 @@
                             Add
                             {% endif %}
                         </button>
-                        <a class="btn btn-outline-secondary" href="{% url 'mailing:addresses' %}">Cancel</a>
+                        <a class="btn btn-outline-secondary" href="{% url 'blog:articles' %}">Cancel</a>
                     </div>
                 </div>
             </div>

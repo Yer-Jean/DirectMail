@@ -1,10 +1,38 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
+from django import forms
 
 from users.models import User
 
 
-class UserRegisterForm(UserCreationForm):
+class StyleFormMixin:
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if not isinstance(field, (forms.BooleanField, forms.ModelMultipleChoiceField)):
+                field.widget.attrs['class'] = 'form-control'
+
+
+class UserRegisterForm(StyleFormMixin, UserCreationForm):
 
     class Meta:
         model = User
         fields = ('email', 'password1', 'password2')
+
+
+class UserForm(StyleFormMixin, UserChangeForm):
+
+    class Meta:
+        model = User
+        fields = ('email', 'password', 'first_name', 'last_name', 'phone', 'telegram', 'avatar')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['password'].widget = forms.HiddenInput()
+
+
+class LoginForm(StyleFormMixin, AuthenticationForm):
+
+    class Meta:
+        model = User
+        fields = ('email', 'password')
