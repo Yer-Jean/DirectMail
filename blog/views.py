@@ -1,24 +1,28 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from pytils.translit import slugify
 
+from blog.forms import ArticleForm
 from blog.models import Article
+from mailing.services import get_cache
 
 
 class ArticleListView(ListView):
     model = Article
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        queryset = queryset.filter(is_published=True)
-        # queryset = queryset.order_by('-created_at')
+        # Получаем данные из кэша, если они есть.
+        # Если нет, то запрашиваем у БД используя фильтр, указанный в kwargs
+        kwargs = {'is_published': True}
+        queryset = get_cache(self.model, kwargs)
         return queryset
 
 
-class ArticleCreateView(CreateView):
+class ArticleCreateView(LoginRequiredMixin, CreateView):
     model = Article
-    fields = ('title', 'content', 'image',)
+    form_class = ArticleForm
 
     def get_success_url(self):
         return reverse('blog:article_view', args=[self.object.slug])
@@ -43,9 +47,9 @@ class ArticleDetailView(DetailView):
         return self.object
 
 
-class ArticleUpdateView(UpdateView):
+class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     model = Article
-    fields = ['title', 'content', 'image', 'is_published']
+    form_class = ArticleForm   #   'is_published']
 
     def get_success_url(self):
         return reverse('blog:article', args=[self.kwargs.get('pk')])
@@ -64,6 +68,6 @@ class ArticleUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class ArticleDeleteView(DeleteView):
+class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     model = Article
     success_url = reverse_lazy('blog:articles')

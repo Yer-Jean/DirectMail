@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
 from math import ceil
 
-from django.conf import settings
 from django.core.cache import cache
+from django.conf import settings
 from django.core.mail import send_mail
 
 from config.settings import CRONJOBS_PERIOD
@@ -59,13 +59,16 @@ def rounded_datetime(date_time: datetime):
     return (date_time + timedelta(hours=hours)).replace(minute=minutes, second=0, microsecond=0)
 
 
-def get_cache(model):
+def get_cache(model, kwargs):
     if settings.CACHE_ENABLE:
         key = f'{model.__name__}_list'
         cache_list = cache.get(key)
+        print(kwargs)
         if cache_list is None:
-            cache_list = model.objects.all()
+            cache_list = model.objects.filter(**kwargs)
+            # cache_list = model.objects.all()
             cache.set(key, cache_list)
     else:
-        cache_list = model.objects.all()
+        cache_list = model.objects.filter(**kwargs)
+        # cache_list = model.objects.all()
     return cache_list

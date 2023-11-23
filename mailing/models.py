@@ -81,7 +81,7 @@ class Schedule(models.Model):
     periodic = models.CharField(max_length=1, choices=PERIODIC_CHOICES, verbose_name='Periodic')
     time = models.TimeField(verbose_name='Time to send')
     day_of_week = models.IntegerField(choices=DAY_OF_WEEK_CHOICES,
-                                   verbose_name='Day of the week to send', **NULLABLE)
+                                      verbose_name='Day of the week to send', **NULLABLE)
     day_of_month = models.IntegerField(verbose_name='Day of the month to send', **NULLABLE)
     message = models.ForeignKey(Message, on_delete=models.CASCADE, verbose_name='Message')
     addresses = models.ManyToManyField(to=Address, blank=True, verbose_name='Addresses')

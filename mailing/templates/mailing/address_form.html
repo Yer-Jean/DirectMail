@@ -14,16 +14,19 @@
             <div class="card-body">
                 {% csrf_token %}
                 {{ form.as_p }}
-<!--                <input type="date" id="date" value="{{ form.birthday|date}} ">-->
-                <div class="btn-group">
-                    <button type="submit" class="btn btn-secondary">
-                        {% if object %}
-                        Save
-                        {% else %}
-                        Add
-                        {% endif %}
-                    </button>
-                    <a class="btn btn-outline-secondary" href="{% url 'mailing:addresses' %}">Cancel</a>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-secondary">
+                            {% if object %}
+                            Save
+                            {% else %}
+                            Add
+                            {% endif %}
+                        </button>
+                        <a class="btn btn-outline-secondary" href="{% url 'mailing:addresses' %}">Cancel</a>
+                    </div>
                 </div>
             </div>
         </div>
