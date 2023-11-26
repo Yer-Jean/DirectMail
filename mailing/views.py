@@ -203,7 +203,7 @@ class ScheduleUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        if self.request.user.is_staff:
+        if self.request.user.role('managers'):
             kwargs['user'] = None
         else:
             kwargs['user'] = self.request.user  # Передаем пользователя в форму
