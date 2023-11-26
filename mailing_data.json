@@ -1,0 +1,325 @@
+[
+  {
+    "model": "mailing.address",
+    "pk": 4,
+    "fields": {
+      "first_name": "Yerzhan",
+      "last_name": "Amirkhanov",
+      "email_address": "yerg@mac.com",
+      "phone_number": null,
+      "gender": "m",
+      "birthday": "1970-07-11",
+      "is_correct": true,
+      "comment": "",
+      "created_date": "2023-10-28T18:32:38.602Z",
+      "modified_date": "2023-10-30T09:28:46.995Z",
+      "created_by": 3
+    }
+  },
+  {
+    "model": "mailing.address",
+    "pk": 5,
+    "fields": {
+      "first_name": "Darth",
+      "last_name": "Vader",
+      "email_address": "DV@mailmailm.com",
+      "phone_number": null,
+      "gender": "m",
+      "birthday": null,
+      "is_correct": true,
+      "comment": "",
+      "created_date": "2023-11-05T17:02:29.486Z",
+      "modified_date": "2023-11-22T19:10:55.245Z",
+      "created_by": 8
+    }
+  },
+  {
+    "model": "mailing.address",
+    "pk": 6,
+    "fields": {
+      "first_name": "Lau",
+      "last_name": "Zhak",
+      "email_address": "l.zhak@icloud.com",
+      "phone_number": null,
+      "gender": "f",
+      "birthday": null,
+      "is_correct": true,
+      "comment": "",
+      "created_date": "2023-11-06T16:30:16.872Z",
+      "modified_date": "2023-11-22T17:51:05.067Z",
+      "created_by": 8
+    }
+  },
+  {
+    "model": "mailing.address",
+    "pk": 7,
+    "fields": {
+      "first_name": "Sau",
+      "last_name": "Zi",
+      "email_address": "sau.zi@icloud.com",
+      "phone_number": null,
+      "gender": "f",
+      "birthday": null,
+      "is_correct": true,
+      "comment": "",
+      "created_date": "2023-11-06T16:30:42.451Z",
+      "modified_date": "2023-11-22T19:03:26.496Z",
+      "created_by": 8
+    }
+  },
+  {
+    "model": "mailing.address",
+    "pk": 11,
+    "fields": {
+      "first_name": "111",
+      "last_name": "111",
+      "email_address": "111@111.com",
+      "phone_number": null,
+      "gender": "u",
+      "birthday": null,
+      "is_correct": true,
+      "comment": "",
+      "created_date": "2023-11-21T16:48:22.156Z",
+      "modified_date": "2023-11-21T16:48:22.203Z",
+      "created_by": 3
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 1,
+    "fields": {
+      "description": "New Year 2024 Promo",
+      "subject": "What is Lorem Ipsum?",
+      "text_message": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      "created_date": "2023-10-30T08:23:03.886Z",
+      "modified_date": "2023-11-06T16:11:34.135Z",
+      "created_by": 3
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 3,
+    "fields": {
+      "description": "Christmas 2023",
+      "subject": "Why do we use it?",
+      "text_message": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+      "created_date": "2023-11-06T16:10:53.268Z",
+      "modified_date": "2023-11-06T16:10:53.315Z",
+      "created_by": 3
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 4,
+    "fields": {
+      "description": "Reminder",
+      "subject": "Where does it come from?",
+      "text_message": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.\r\n\r\nThe standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.",
+      "created_date": "2023-11-06T16:31:54.288Z",
+      "modified_date": "2023-11-06T16:31:54.337Z",
+      "created_by": 3
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 5,
+    "fields": {
+      "description": "Task",
+      "subject": "Where can I get some?",
+      "text_message": "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.",
+      "created_date": "2023-11-06T16:32:30.153Z",
+      "modified_date": "2023-11-06T16:32:30.164Z",
+      "created_by": 3
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 13,
+    "fields": {
+      "description": "Black Friday",
+      "subject": "Black Friday 11/11",
+      "text_message": "Black Friday is comming",
+      "created_date": "2023-11-23T18:04:35.542Z",
+      "modified_date": "2023-11-23T18:04:35.587Z",
+      "created_by": 8
+    }
+  },
+  {
+    "model": "mailing.schedule",
+    "pk": 1,
+    "fields": {
+      "description": "Single - New Year 2024 Promo",
+      "start_date": "2023-11-18",
+      "end_date": null,
+      "periodic": "s",
+      "time": "08:22:00",
+      "day_of_week": null,
+      "day_of_month": null,
+      "message": 1,
+      "status": "f",
+      "is_active": true,
+      "created_date": "2023-11-05T09:14:20.290Z",
+      "modified_date": "2023-11-24T17:48:12.642Z",
+      "created_by": 3,
+      "addresses": [
+        5,
+        4
+      ]
+    }
+  },
+  {
+    "model": "mailing.schedule",
+    "pk": 3,
+    "fields": {
+      "description": "Daily - Reminder",
+      "start_date": "2023-11-18",
+      "end_date": "2023-11-30",
+      "periodic": "d",
+      "time": "08:18:52",
+      "day_of_week": null,
+      "day_of_month": null,
+      "message": 4,
+      "status": "r",
+      "is_active": true,
+      "created_date": "2023-11-06T16:33:55.573Z",
+      "modified_date": "2023-11-25T10:00:52.192Z",
+      "created_by": 8,
+      "addresses": [
+        6,
+        4
+      ]
+    }
+  },
+  {
+    "model": "mailing.schedule",
+    "pk": 4,
+    "fields": {
+      "description": "Monthly-Task",
+      "start_date": "2023-11-18",
+      "end_date": "2024-03-30",
+      "periodic": "m",
+      "time": "09:22:45",
+      "day_of_week": null,
+      "day_of_month": 18,
+      "message": 5,
+      "status": "c",
+      "is_active": true,
+      "created_date": "2023-11-06T16:35:57.939Z",
+      "modified_date": "2023-11-25T09:56:43.013Z",
+      "created_by": 3,
+      "addresses": [
+        6,
+        7,
+        4
+      ]
+    }
+  },
+  {
+    "model": "mailing.schedule",
+    "pk": 16,
+    "fields": {
+      "description": "Weekly - Black Friday 11/11",
+      "start_date": "2023-11-25",
+      "end_date": "2023-12-13",
+      "periodic": "w",
+      "time": "10:05:00",
+      "day_of_week": 5,
+      "day_of_month": null,
+      "message": 13,
+      "status": "r",
+      "is_active": true,
+      "created_date": "2023-11-23T18:05:11.843Z",
+      "modified_date": "2023-11-23T18:28:01.767Z",
+      "created_by": 8,
+      "addresses": [
+        5,
+        7
+      ]
+    }
+  },
+  {
+    "model": "mailing.schedule",
+    "pk": 18,
+    "fields": {
+      "description": "Christmas 2023",
+      "start_date": "2023-11-25",
+      "end_date": null,
+      "periodic": "s",
+      "time": "11:00:00",
+      "day_of_week": 1,
+      "day_of_month": null,
+      "message": 13,
+      "status": "p",
+      "is_active": true,
+      "created_date": "2023-11-24T05:55:55.440Z",
+      "modified_date": "2023-11-25T09:56:33.145Z",
+      "created_by": 8,
+      "addresses": [
+        7
+      ]
+    }
+  },
+  {
+    "model": "mailing.schedule",
+    "pk": 26,
+    "fields": {
+      "description": "24ку",
+      "start_date": "2023-11-30",
+      "end_date": null,
+      "periodic": "s",
+      "time": "03:30:00",
+      "day_of_week": 1,
+      "day_of_month": null,
+      "message": 13,
+      "status": "c",
+      "is_active": true,
+      "created_date": "2023-11-26T10:01:36.691Z",
+      "modified_date": "2023-11-26T10:01:36.741Z",
+      "created_by": 8,
+      "addresses": [
+        6,
+        7
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailinglog",
+    "pk": 10,
+    "fields": {
+      "date_of_last_attempt": "2023-11-18T08:19:10.033Z",
+      "status_of_last_attempt": false,
+      "server_response": "(553, b'5.7.1 Sender address rejected: not owned by auth user. 1700295549-6Ji5lSYOk0U0-sSlBO1YR', 'my_mail@yandexx.com')",
+      "schedule": 3
+    }
+  },
+  {
+    "model": "mailing.mailinglog",
+    "pk": 11,
+    "fields": {
+      "date_of_last_attempt": "2023-11-18T08:21:08.671Z",
+      "status_of_last_attempt": false,
+      "server_response": "(553, b'5.7.1 Sender address rejected: not owned by auth user. 1700295668-5LiVLYbOqiE0-mKBtzUHG', 'my_mail@yandexx.com')",
+      "schedule": 1
+    }
+  },
+  {
+    "model": "mailing.mailinglog",
+    "pk": 13,
+    "fields": {
+      "date_of_last_attempt": "2023-11-18T08:22:58.154Z",
+      "status_of_last_attempt": true,
+      "server_response": "Message sent successfully",
+      "schedule": 1
+    }
+  },
+  {
+    "model": "mailing.mailinglog",
+    "pk": 14,
+    "fields": {
+      "date_of_last_attempt": "2023-11-18T09:23:09.028Z",
+      "status_of_last_attempt": true,
+      "server_response": "Message sent successfully",
+      "schedule": 4
+    }
+  }
+]

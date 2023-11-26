@@ -3,11 +3,7 @@
 {% block content %}
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h3>Mailing Logs</h3>
-<!--    <div class="btn-toolbar mb-2 mb-md-0">-->
-<!--        <a type="button" class="btn btn-sm btn-secondary" href="{% url 'mailing:schedule_create' %}">Add-->
-<!--            new</a>-->
-<!--    </div>-->
+    <h3>Reports</h3>
 </div>
 
 <div class="table-responsive small">
@@ -20,12 +16,9 @@
             <th>Message periodicity</th>
             <th>Schedule description</th>
             <th>Message subject</th>
-            <th></th>
+            <th><div class="d-grid gap-2 d-md-flex justify-content-md-end">Action</div></th>
         </tr>
         </thead>
-        <!--                Тэг делающий всю строку - ссылкой-->
-        <!--                <tr style='cursor: pointer; cursor: hand;' onclick="window.location='google.com';">-->
-
 
         {% for object in object_list %}
         <tr>

@@ -1,5 +1,6 @@
 {% extends 'mailing/base.html' %}
 {% load my_tags %}
+{% load users_tags %}
 {% block content %}
 
 
@@ -30,8 +31,20 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                     <a class="btn btn-outline-secondary btn-sm" href="{% url 'blog:articles' %}">All articles</a>
-                    <a class="btn btn-outline-secondary btn-sm" href="{% url 'blog:article_update' object.pk %}">Edit</a>
-                    <a class="btn btn-outline-danger btn-sm" href="{% url 'blog:article_delete' object.pk %}">Delete</a>
+                    {% if user.email == object.created_by.email %}
+                        <a class="btn btn-outline-secondary btn-sm" href="{% url 'blog:article_update' object.pk %}">Edit</a>
+                        <a class="btn btn-outline-danger btn-sm" href="{% url 'blog:article_delete' object.pk %}">Delete</a>
+                    {% endif %}
+                    {% if request.user|has_group:"managers" %}
+                        <a class="btn btn-outline-secondary"
+                               href="{% url 'blog:article_delete' object.pk %}">
+                            {% if object.is_published %}
+                                Unpublish
+                            {% else %}
+                                Publish
+                            {% endif %}
+                        </a>
+                    {% endif %}
                 </div>
                 <small class="text-body-secondary">{{ object.views_count }} views</small>
             </div>
@@ -39,38 +52,5 @@
     </div>
 </div>
 
-
-{% comment %}
-<div class="container py-4">
-
-    <div class="h-100 p-5 bg-body-tertiary border rounded-3">
-        <p><h3 class="card-title">{{ object.title }}</h3></p>
-        <div class="container-fluid py-5">
-            <div class="text-body-secondary">
-                <p>{{ object.created_date|date:"d M Y H:i" }}</p>
-            </div>
-            <p><small class="text-body-secondary">
-                {{ object.views_count }} views
-            </small></p>
-            {% if object.image %}
-            <img src="{{ object.image|mediapath }}" class="p-4 img-fluid"
-                 width="650px" height="auto" alt="Responsive image">
-            {% endif %}
-
-            <p class="col-md-10 fs-4">{{ object.content|linebreaksbr }}</p>
-
-            <div class="d-flex justify-content-between align-items-center">
-        {#        {% if user.is_authenticated %}  #}
-                <div class="btn-group">
-                    <a class="btn btn-outline-secondary" href="{% url 'blog:article_update' object.slug %}">Edit</a>
-         {#           <a class="btn btn-outline-danger" href="{% url 'blog:article_delete' object.slug %}">Delete</a>  #}
-                </div>
-         {#        {% endif %}  #}
-            </div>
-        </div>
-    </div>
-</div>
-
-{% endcomment %}
 
 {% endblock %}

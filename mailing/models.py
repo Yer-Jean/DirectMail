@@ -77,7 +77,7 @@ class Schedule(models.Model):
 
     description = models.CharField(max_length=200, verbose_name='Description')
     start_date = models.DateField(verbose_name='Start day')
-    end_date = models.DateField(verbose_name='End day')
+    end_date = models.DateField(verbose_name='End day', **NULLABLE)
     periodic = models.CharField(max_length=1, choices=PERIODIC_CHOICES, verbose_name='Periodic')
     time = models.TimeField(verbose_name='Time to send')
     day_of_week = models.IntegerField(choices=DAY_OF_WEEK_CHOICES,
@@ -86,6 +86,7 @@ class Schedule(models.Model):
     message = models.ForeignKey(Message, on_delete=models.CASCADE, verbose_name='Message')
     addresses = models.ManyToManyField(to=Address, blank=True, verbose_name='Addresses')
     status = models.CharField(default='c', max_length=1, choices=STATUS_CHOICES, verbose_name='Status')
+    is_active = models.BooleanField(default=True, verbose_name='Active')
     created_date = models.DateTimeField(auto_now_add=True, verbose_name='Created date')
     modified_date = models.DateTimeField(auto_now=True, verbose_name='Modified date')
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
@@ -98,6 +99,7 @@ class Schedule(models.Model):
         verbose_name = 'Schedule'
         verbose_name_plural = 'Schedules'
         ordering = ('-start_date',)
+        permissions = [('set_schedule_active_status', 'Can activate/deactivate schedule')]
 
 
 class MailingLog(models.Model):

@@ -16,10 +16,10 @@
                     <button type="submit" class="btn btn-secondary">
                         Login
                     </button>
-                    <a class="btn btn-outline-secondary" onclick="history.back();">Cancel</a>
+                    <a class="btn btn-outline-secondary"  href="{% url 'mailing:index' %}">Cancel</a>
                 </div>
                 <div class="card-footer">
-           {#          <a class="btn btn-sm btn-outline-secondary" href="{% url 'users:reset_password' %}">Forgot password?</a>  #}
+                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'users:password_reset' %}">Forgot password?</a>
                 </div>
             </div>
         </div>

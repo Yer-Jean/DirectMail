@@ -5,13 +5,12 @@ from mailing.apps import MailingConfig
 from mailing.views import IndexView, AddressListView, AddressCreateView, AddressDetailView, AddressUpdateView, \
     AddressDeleteView, MessageListView, MessageCreateView, MessageDetailView, MessageUpdateView, MessageDeleteView, \
     ScheduleListView, ScheduleCreateView, ScheduleDetailView, ScheduleUpdateView, ScheduleDeleteView, \
-    MailingLogListView, MailingLogDetailView
+    MailingLogListView, MailingLogDetailView, toggle_active, toggle_run_pause
 
 app_name = MailingConfig.name
 
 urlpatterns = [
-    path('', IndexView.as_view(), name='index'),
-    # path('', cache_page(300)(IndexView.as_view()), name='index'),
+    path('', cache_page(60)(IndexView.as_view()), name='index'),
 
     path('addresses/', AddressListView.as_view(), name='addresses'),
     path('addresses/create/', AddressCreateView.as_view(), name='address_create'),
@@ -30,6 +29,8 @@ urlpatterns = [
     path('schedules/view/<int:pk>/', ScheduleDetailView.as_view(), name='schedule_view'),
     path('schedules/update/<int:pk>', ScheduleUpdateView.as_view(), name='schedule_update'),
     path('schedules/delete/<int:pk>', ScheduleDeleteView.as_view(), name='schedule_delete'),
+    path('schedules/toggle_active/<int:pk>', toggle_active, name='toggle_active'),
+    path('schedules/toggle_run_pause/<int:pk>', toggle_run_pause, name='toggle_run_pause'),
 
     path('mailing_logs/', MailingLogListView.as_view(), name='mailing_logs'),
     path('mailing_logs/view/<int:pk>', MailingLogDetailView.as_view(), name='mailing_log_view'),

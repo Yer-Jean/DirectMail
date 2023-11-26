@@ -19,11 +19,13 @@ class MessageForm(StyleFormMixin, forms.ModelForm):
 
 
 class ScheduleForm(forms.ModelForm):
-
+    """Кастомная форма для заполнения расписания рассылки, так как при ее
+    заполнении динамически меняются поля для ввода различных значений"""
     description = forms.CharField(widget=forms.TextInput())
     periodic = forms.ChoiceField(choices=Schedule.PERIODIC_CHOICES)
     start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'placeholder': 'dd/mm/yy'}))
-    end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'placeholder': 'dd/mm/yy'}))
+    end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'placeholder': 'dd/mm/yy'}),
+                               required=False)
     time = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))
     day_of_week = forms.ChoiceField(choices=Schedule.DAY_OF_WEEK_CHOICES, required=False)
     day_of_month = forms.IntegerField(min_value=1, max_value=30, required=False)
@@ -38,8 +40,9 @@ class ScheduleForm(forms.ModelForm):
         user = kwargs.pop('user', None)  # Передаем пользователя в форму через параметры
         super().__init__(*args, **kwargs)
         # Используем кастомный QuerySet для полей message и addresses
-        self.fields['message'].queryset = Message.objects.filter(created_by=user)
-        self.fields['addresses'].queryset = Address.objects.filter(created_by=user)
+        if user:
+            self.fields['message'].queryset = Message.objects.filter(created_by=user)
+            self.fields['addresses'].queryset = Address.objects.filter(created_by=user)
         # Если форма открыта для редактирования, устанавливаем начальные значения
         if self.instance.pk:
             self.fields['message'].initial = self.instance.message

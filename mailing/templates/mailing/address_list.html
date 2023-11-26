@@ -1,13 +1,15 @@
 {% extends 'mailing/base.html' %}
-
+{% load users_tags %}
 {% block content %}
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h3>Addresses</h3>
+    {% if not request.user|has_group:"managers" %}
     <div class="btn-toolbar mb-2 mb-md-0">
         <a type="button" class="btn btn-sm btn-secondary" href="{% url 'mailing:address_create' %}">Add
             new</a>
     </div>
+    {% endif %}
 </div>
 
 <div class="table-responsive small">
@@ -20,11 +22,9 @@
             <th>Phone</th>
             <th>Birthday</th>
             <th>Gender</th>
-            <th></th>
+            <th><div class="d-grid gap-2 d-md-flex justify-content-md-end">Actions</div></th>
         </tr>
         </thead>
-        <!--                Тэг делающий всю строку - ссылкой-->
-        <!--                <tr style='cursor: pointer; cursor: hand;' onclick="window.location='google.com';">-->
 
         {% for object in object_list %}
         <tr>
@@ -63,20 +63,34 @@
                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
                         View
                     </a>
-                    <a type="button" class="btn" href="{% url 'mailing:address_update' object.pk %}"
-                       style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                        Edit
-                    </a>
-                    <a type="button" class="btn" href="{% url 'mailing:address_delete' object.pk %}"
-                       style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                        Delete
-                    </a>
+                    {% if not request.user|has_group:"managers" %}
+                        <a type="button" class="btn" href="{% url 'mailing:address_update' object.pk %}"
+                           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                            Edit
+                        </a>
+                        <a type="button" class="btn" href="{% url 'mailing:address_delete' object.pk %}"
+                           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                            Delete
+                        </a>
+                    {% endif %}
                 </div>
             </td>
         </tr>
         {% endfor %}
 
     </table>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">
+            {{ message|safe }}
+            <a type="button" class="btn" href="{% url 'users:users' %}"
+               style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .8rem;">✕</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 </div>
 
 <!--#TODO: Может реализовать DetailView в нижней половине окна?-->

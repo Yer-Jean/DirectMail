@@ -1,4 +1,5 @@
 {% load static %}
+{% load users_tags %}
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
 <head>
@@ -203,15 +204,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'blog:articles' %}">Blog</a>
                 </li>
+                {% if request.user|has_group:"managers" %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:users' %}">Users</a>
+                </li>
+                {% endif %}
 
-                <!--                <li class="nav-item dropdown">-->
-                <!--                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">yerzhanamirkhanov@gmail.com</a>-->
-                <!--                    <ul class="dropdown-menu">-->
-                <!--                        <li><a class="dropdown-item" href="#">Action</a></li>-->
-                <!--                        <li><a class="dropdown-item" href="#">Another action</a></li>-->
-                <!--                        <li><a class="dropdown-item" href="#">Something else here</a></li>-->
-                <!--                    </ul>-->
-                <!--                </li>-->
             </ul>
 
         </div>
@@ -228,26 +226,12 @@
     </div>
 </nav>
 
-<!--<div class="nav-scroller bg-body shadow-sm">-->
-<!--    <nav class="nav justify-content-center" aria-label="Secondary navigation">-->
-<!--        <a class="nav-link active" aria-current="page" href="#">Dashboard</a>-->
-<!--        <a class="nav-link" href="#">-->
-<!--            Friends-->
-<!--            <span class="badge text-bg-light rounded-pill align-text-bottom">27</span>-->
-<!--        </a>-->
-<!--        <a class="nav-link" href="#">Explore</a>-->
-<!--        <a class="nav-link" href="#">Suggestions</a>-->
-<!--        <a class="nav-link" href="#">Link</a>-->
-<!--        <a class="nav-link" href="#">Link</a>-->
-<!--        <a class="nav-link" href="#">Link</a>-->
-<!--        <a class="nav-link" href="#">Link</a>-->
-<!--        <a class="nav-link" href="#">Link</a>-->
-<!--    </nav>-->
-<!--</div>-->
-
 <main class="container">
     <div class="my-3 p-3 bg-body rounded shadow-sm">
         <div class="container px-4 py-0">
+
+
+
 
             {% block content %}
             {% endblock %}

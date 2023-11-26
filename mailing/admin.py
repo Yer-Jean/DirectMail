@@ -19,7 +19,7 @@ class MessageAdmin(admin.ModelAdmin):
 @admin.register(Schedule)
 class ScheduleAdmin(admin.ModelAdmin):
     list_display = ('description', 'start_date', 'end_date', 'periodic', 'time', 'day_of_week',
-                    'day_of_month', 'message', 'status', 'created_by', 'created_date', 'modified_date')
+                    'day_of_month', 'message', 'status', 'is_active', 'created_by', 'created_date', 'modified_date')
     list_filter = ('start_date',)
 
 

@@ -15,10 +15,9 @@ def send_mail_now(mail) -> bool:
     recipients_list = [recipient.email_address for recipient in mail.addresses.all()]
     print(recipients_list)
     try:
-        sending_result = send_mail(
+        send_mail(
             subject=mail.message.subject,
             message=mail.message.text_message,
-            # from_email='my_mail@yandexx.com',
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=recipients_list,
             fail_silently=False,
@@ -37,7 +36,6 @@ def send_mail_now(mail) -> bool:
             server_response='Message sent successfully',
             schedule=mail,
         )
-        # print(mail.message.subject)
         return True
 
 
@@ -66,9 +64,7 @@ def get_cache(model, kwargs):
         print(kwargs)
         if cache_list is None:
             cache_list = model.objects.filter(**kwargs)
-            # cache_list = model.objects.all()
             cache.set(key, cache_list)
     else:
         cache_list = model.objects.filter(**kwargs)
-        # cache_list = model.objects.all()
     return cache_list
