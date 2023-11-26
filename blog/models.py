@@ -14,7 +14,6 @@ class Article(models.Model):
     views_count = models.IntegerField(default=0, verbose_name='Views count')
     created_date = models.DateTimeField(auto_now_add=True, verbose_name='Created date')
     modified_date = models.DateTimeField(auto_now=True, verbose_name='Modified date')
-    # published_date = models.DateTimeField(**NULLABLE, verbose_name='Published date')
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
                                    **NULLABLE, verbose_name='Created by')
 
@@ -28,4 +27,4 @@ class Article(models.Model):
         verbose_name = 'article'
         verbose_name_plural = 'articles'
         ordering = ('-created_date',)
-        # permissions = [('set_published_status', 'Can publish article')].
+        permissions = [('set_published_status', 'Can publish article')]

@@ -1,13 +1,15 @@
 {% extends 'mailing/base.html' %}
-
+{% load users_tags %}
 {% block content %}
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h3>Messages</h3>
+    {% if not request.user|has_group:"managers" %}
     <div class="btn-toolbar mb-2 mb-md-0">
         <a type="button" class="btn btn-sm btn-secondary" href="{% url 'mailing:message_create' %}">Add
             new</a>
     </div>
+    {% endif %}
 </div>
 
 <div class="table-responsive small">
@@ -17,11 +19,13 @@
             <th>Description</th>
             <th>Subject</th>
             <th>Message</th>
-            <th></th>
+            <th>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    Actions
+                </div>
+            </th>
         </tr>
         </thead>
-        <!--                Тэг делающий всю строку - ссылкой-->
-        <!--                <tr style='cursor: pointer; cursor: hand;' onclick="window.location='google.com';">-->
 
         {% for object in object_list %}
         <tr>
@@ -32,17 +36,19 @@
             <td>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <a type="button" class="btn" href="{% url 'mailing:message_view' object.pk %}"
-                       style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                       style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .25rem; --bs-btn-font-size: .75rem;">
                         View
                     </a>
-                    <a type="button" class="btn" href="{% url 'mailing:message_update' object.pk %}"
-                       style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                        Edit
-                    </a>
-                    <a type="button" class="btn" href="{% url 'mailing:message_delete' object.pk %}"
-                       style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                        Delete
-                    </a>
+                    {% if not request.user|has_group:"managers" %}
+                        <a type="button" class="btn" href="{% url 'mailing:message_update' object.pk %}"
+                           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .25rem; --bs-btn-font-size: .75rem;">
+                            Edit
+                        </a>
+                        <a type="button" class="btn" href="{% url 'mailing:message_delete' object.pk %}"
+                           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .25rem; --bs-btn-font-size: .75rem;">
+                            Delete
+                        </a>
+                    {% endif %}
                 </div>
             </td>
         </tr>

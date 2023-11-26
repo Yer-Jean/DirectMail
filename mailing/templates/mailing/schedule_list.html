@@ -1,13 +1,15 @@
 {% extends 'mailing/base.html' %}
-
+{% load users_tags %}
 {% block content %}
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h3>Schedules</h3>
+    {% if not request.user|has_group:"managers" %}
     <div class="btn-toolbar mb-2 mb-md-0">
         <a type="button" class="btn btn-sm btn-secondary" href="{% url 'mailing:schedule_create' %}">Add
             new</a>
     </div>
+    {% endif %}
 </div>
 
 <div class="table-responsive small">
@@ -18,14 +20,11 @@
             <th>Start Date</th>
             <th>End Date</th>
             <th>Periodic</th>
-            <th>Subject</th>
+            <th>Message subject</th>
             <th>Status</th>
-            <th></th>
+            <th>Actions</th>
         </tr>
         </thead>
-        <!--                Тэг делающий всю строку - ссылкой-->
-        <!--                <tr style='cursor: pointer; cursor: hand;' onclick="window.location='google.com';">-->
-
 
         {% for object in object_list %}
         <tr>
@@ -38,73 +37,87 @@
             {% elif object.periodic == "d" %}
                 <td>Daily at {{ object.time|time:"H:i" }}</td>
             {% elif object.periodic == "w" %}
-                <td>Weekly every {{ object.get_day_of_week_display }}</td>
+                <td>Weekly every {{ object.get_day_of_week_display }} at {{ object.time|time:"H:i" }}</td>
             {% elif object.periodic == "m" %}
-                <td>Monthly every {{ object.day_of_month }} day</td>
+                <td>Monthly every {{ object.day_of_month }} day at {{ object.time|time:"H:i" }}</td>
             {% endif %}
 
             <td>{{ object.message.subject|truncatechars:30 }}</td>
             <td>
-                {% if object.status == "c" %}
-                    <span class="badge rounded-pill text-bg-primary opacity-75">
-                {% elif object.status == "r" %}
-                    <span class="badge rounded-pill text-bg-success opacity-75">
-                {% elif object.status == "p" %}
-                    <span class="badge rounded-pill text-bg-warning opacity-75">
-                {% elif object.status == "f" %}
-                    <span class="badge rounded-pill text-bg-secondary opacity-75">
-                {% endif %}
-                {{ object.get_status_display }}</span>
-            </td>
-
-{% comment %}
-            <td>{{ object.email_address }}
-                {% if object.is_correct %}
-                    <span class="badge rounded-pill text-bg-secondary">✓</span>
+                {% if object.is_active %}
+                    {% if object.status == "c" %}
+                        <span class="badge rounded-pill text-bg-primary opacity-75">
+                    {% elif object.status == "r" %}
+                        <span class="badge rounded-pill text-bg-success opacity-75">
+                    {% elif object.status == "p" %}
+                        <span class="badge rounded-pill text-bg-warning opacity-75">
+                    {% elif object.status == "f" %}
+                        <span class="badge rounded-pill text-bg-secondary opacity-75">
+                    {% endif %}
+                    {{ object.get_status_display }}</span>
                 {% else %}
-                    <span class="badge rounded-pill text-bg-secondary">✕</span>
+                    <span class="badge rounded-pill text-bg-danger opacity-75">Not active</span>
                 {% endif %}
             </td>
-
-            {% if object.phone_number %}
-                <td>{{ object.phone_number }}</td>
-            {% else %}
-                <td></td>
-            {% endif %}
-
-            {% if object.birthday %}
-                <td>{{ object.birthday|date:"d.m.Y" }}</td>
-            {% else %}
-                <td></td>
-            {% endif %}
-
-            {% if object.gender == "u" %}
-                <td></td>
-            {% else %}
-                <td>{{ object.get_gender_display|title }}</td>
-            {% endif %}
- {% endcomment %}
-
 
             <td>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a type="button" class="btn" href="{% url 'mailing:schedule_view' object.pk %}"
-                       style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                        View
-                    </a>
-                    <a type="button" class="btn" href="{% url 'mailing:schedule_update' object.pk %}"
-                       style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                        Edit
-                    </a>
-                    <a type="button" class="btn" href="{% url 'mailing:schedule_delete' object.pk %}"
-                       style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                        Delete
-                    </a>
+                    {% if request.user|has_group:"managers" %}
+                        <a type="button" class="btn" href="{% url 'mailing:toggle_active' object.pk %}"
+                           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .25rem; --bs-btn-font-size: .75rem;">
+                            {% if object.status != "f" %}
+                                {% if object.is_active %}
+                                    Deactivate
+                                {% else %}
+                                    Activate
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                        <a type="button" class="btn" href="{% url 'mailing:schedule_view' object.pk %}"
+                           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .25rem; --bs-btn-font-size: .75rem;">
+                            View
+                        </a>
+                    {% else %}
+                        <a type="button" class="btn" href="{% url 'mailing:toggle_run_pause' object.pk %}"
+                               style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .25rem; --bs-btn-font-size: .75rem;">
+                                {% if object.is_active and object.status != "f" %}
+                                    {% if object.status == "p" %}
+                                        Run
+                                    {% else %}
+                                        Pause
+                                    {% endif %}
+                                {% endif %}
+                            </a>
+                        <a type="button" class="btn" href="{% url 'mailing:schedule_view' object.pk %}"
+                           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .25rem; --bs-btn-font-size: .75rem;">
+                            View
+                        </a>
+                        <a type="button" class="btn" href="{% url 'mailing:schedule_update' object.pk %}"
+                           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .25rem; --bs-btn-font-size: .75rem;">
+                            Edit
+                        </a>
+                        <a type="button" class="btn" href="{% url 'mailing:schedule_delete' object.pk %}"
+                           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .25rem; --bs-btn-font-size: .75rem;">
+                            Delete
+                        </a>
+                    {% endif %}
                 </div>
             </td>
         </tr>
         {% endfor %}
     </table>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">
+            {{ message|safe }}
+            <a type="button" class="btn" href="{% url 'users:users' %}"
+               style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .8rem;">✕</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 </div>
 
 <!--#TODO: Может реализовать DetailView в нижней половине окна?-->

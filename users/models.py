@@ -21,3 +21,12 @@ class User(AbstractUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+    def role(self, group_name):
+        return self.groups.filter(name=group_name).exists()
+
+    class Meta:
+        verbose_name = 'user'
+        verbose_name_plural = 'users'
+        ordering = ('email',)
+        permissions = [('set_user_active_status', 'Can activate/deactivate users')]

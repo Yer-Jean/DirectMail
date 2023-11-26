@@ -1,8 +1,9 @@
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import  LogoutView
 from django.urls import path
 
 from users.apps import UsersConfig
-from users.views import RegisterView, activate_user, UserUpdateView, UserLoginView
+from users.views import RegisterView, activate_user, UserUpdateView, UserLoginView, UserListView, toggle_active, \
+    password_reset
 
 app_name = UsersConfig.name
 
@@ -12,6 +13,7 @@ urlpatterns = [
     path('signup/', RegisterView.as_view(), name='signup'),
     path('profile/', UserUpdateView.as_view(), name='profile'),
     path('confirm/<str:token>', activate_user, name='confirm'),
-    #TODO: написать метод сброса пароля
-    # path('resetpassword/', reset_password, name='reset_password'),
+    path('users/', UserListView.as_view(), name='users'),
+    path('toggle_active/<int:pk>', toggle_active, name='toggle_active'),
+    path('password_reset/', password_reset, name='password_reset'),
 ]
